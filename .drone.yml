@@ -3,7 +3,6 @@ name: default
 
 steps:
 
-  # Restore the cache if it exists
   - name: restore-cache
     image: homerovalle/drone-gcs-cache
     settings:
