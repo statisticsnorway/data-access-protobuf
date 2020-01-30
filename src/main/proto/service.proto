@@ -20,6 +20,7 @@ message AccessTokenRequest {
 
 message AccessTokenResponse {
     string accessToken = 1;
+    int64 expirationTime = 2;
 }
 
 message LocationRequest {
