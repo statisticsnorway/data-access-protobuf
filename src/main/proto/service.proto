@@ -9,7 +9,13 @@ service DataAccessService {
 }
 
 message AccessTokenRequest {
-    string location = 1;
+    string userId = 1;
+    enum Privilege {
+        READ = 0;
+        WRITE = 1;
+    }
+    Privilege privilege = 2;
+    string location = 3;
 }
 
 message AccessTokenResponse {
@@ -17,8 +23,22 @@ message AccessTokenResponse {
 }
 
 message LocationRequest {
-    string valuation = 1;
-    string state = 2;
+    enum Valuation {
+        SENSITIVE = 0;
+        SHIELDED = 1;
+        INTERNAL = 2;
+        OPEN = 3;
+    }
+    Valuation valuation = 1;
+    enum DatasetState {
+        OTHER = 0;
+        RAW = 1;
+        INPUT = 2;
+        PROCESSED = 3;
+        OUTPUT = 4;
+        PRODUCT = 5;
+    }
+    DatasetState state = 2;
 }
 
 message LocationResponse {
