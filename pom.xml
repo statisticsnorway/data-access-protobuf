@@ -70,6 +70,8 @@
     </dependencies>
 
     <build>
+        <!-- restore default maven final artifact name -->
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <extensions>
             <extension>
                 <groupId>kr.motd.maven</groupId>
