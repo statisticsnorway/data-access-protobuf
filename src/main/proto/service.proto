@@ -5,7 +5,6 @@ option java_package = "no.ssb.dapla.data.access.protobuf";
 
 service DataAccessService {
     rpc getAccessToken (AccessTokenRequest) returns (AccessTokenResponse);
-    rpc getLocation (LocationRequest) returns (LocationResponse);
 }
 
 message AccessTokenRequest {
@@ -15,34 +14,13 @@ message AccessTokenRequest {
         WRITE = 1;
     }
     Privilege privilege = 2;
-    string location = 3;
+    string path = 3; // example: '/rawdata/skatt/konto'
 }
 
 message AccessTokenResponse {
     string accessToken = 1;
     int64 expirationTime = 2;
+    string parentUri = 3;
 }
 
-message LocationRequest {
-    enum Valuation {
-        SENSITIVE = 0;
-        SHIELDED = 1;
-        INTERNAL = 2;
-        OPEN = 3;
-    }
-    Valuation valuation = 1;
-    enum DatasetState {
-        OTHER = 0;
-        RAW = 1;
-        INPUT = 2;
-        PROCESSED = 3;
-        OUTPUT = 4;
-        PRODUCT = 5;
-    }
-    DatasetState state = 2;
-}
-
-message LocationResponse {
-    string location = 1;
-}
 
