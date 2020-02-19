@@ -5,6 +5,7 @@ option java_package = "no.ssb.dapla.data.access.protobuf";
 
 service DataAccessService {
     rpc getAccessToken (AccessTokenRequest) returns (AccessTokenResponse);
+    rpc getLocation (LocationRequest) returns (LocationResponse);
 }
 
 message AccessTokenRequest {
@@ -23,4 +24,17 @@ message AccessTokenResponse {
     string parentUri = 3;
 }
 
+message LocationRequest {
+    string userId = 1;
+    string path = 2; // example: '/rawdata/skatt/konto'
+
+    // Find version that was valid of the time of snapshot.
+    // If not supplied will find timestamp of latest version.
+    int64 snapshot = 3;
+}
+
+message LocationResponse {
+    string parentUri = 1;
+    int64 version = 2;
+}
 
