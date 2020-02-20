@@ -22,6 +22,7 @@ message AccessTokenResponse {
     string accessToken = 1;
     int64 expirationTime = 2;
     string parentUri = 3;
+    int64 version = 4;
 }
 
 message LocationRequest {
