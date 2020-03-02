@@ -16,6 +16,10 @@ message AccessTokenRequest {
     }
     Privilege privilege = 2;
     string path = 3; // example: '/rawdata/skatt/konto'
+
+    // Find version that was valid of the time of snapshot.
+    // If not supplied will find timestamp of latest version.
+    int64 snapshot = 4;
 }
 
 message AccessTokenResponse {
