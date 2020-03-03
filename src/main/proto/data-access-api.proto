@@ -8,23 +8,6 @@ service DataAccessService {
     rpc getLocation (LocationRequest) returns (LocationResponse);
 }
 
-message AccessTokenRequest {
-    string userId = 1;
-    Privilege privilege = 2;
-    string path = 3; // example: '/rawdata/skatt/konto'
-
-    // Find version that was valid of the time of snapshot.
-    // If not supplied will find timestamp of latest version.
-    int64 snapshot = 4;
-
-    WriteOptions writeOptions = 5;
-}
-
-message WriteOptions {
-    Valuation valuation = 1;
-    DatasetState state = 2;
-}
-
 enum Privilege {
     READ = 0;
     WRITE = 1;
@@ -46,6 +29,25 @@ enum DatasetState {
     PRODUCT = 5;
 }
 
+message WriteOptions {
+    Valuation valuation = 1;
+    DatasetState state = 2;
+}
+
+message AccessTokenRequest {
+    string userId = 1;
+    Privilege privilege = 2;
+    string path = 3; // example: '/rawdata/skatt/konto'
+
+    // Find version that was valid of the time of snapshot.
+    // If not supplied (or value == 0) will find timestamp of latest version.
+    int64 snapshot = 4;
+
+    // If Privilege is a WRITE operation, then the writeOptions must be present
+    // and contain the desired valuation and state
+    WriteOptions writeOptions = 5;
+}
+
 message AccessTokenResponse {
     string accessToken = 1;
     int64 expirationTime = 2;
@@ -55,15 +57,21 @@ message AccessTokenResponse {
 
 message LocationRequest {
     string userId = 1;
-    string path = 2; // example: '/rawdata/skatt/konto'
+    Privilege privilege = 2;
+    string path = 3; // example: '/rawdata/skatt/konto'
 
     // Find version that was valid of the time of snapshot.
-    // If not supplied will find timestamp of latest version.
-    int64 snapshot = 3;
+    // If not supplied (or value == 0) will find timestamp of latest version.
+    int64 snapshot = 4;
+
+    // If Privilege is a WRITE operation, then the writeOptions must be present
+    // and contain the desired valuation and state
+    WriteOptions writeOptions = 5;
 }
 
 message LocationResponse {
-    string parentUri = 1;
-    string version = 2;
+    string parentUri = 1; // only set if accessAllowed is true, otherwise otherwise
+    string version = 2; // only set if accessAllowed is true, otherwise not set
+    bool accessAllowed = 3;
 }
 
