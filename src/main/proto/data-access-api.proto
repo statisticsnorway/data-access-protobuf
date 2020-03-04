@@ -49,10 +49,11 @@ message AccessTokenRequest {
 }
 
 message AccessTokenResponse {
+    // there will be an exception if access is not allowed
     string accessToken = 1;
     int64 expirationTime = 2;
     string parentUri = 3;
-    string version = 4;
+    string version = 4; // only set if there was a READ request, otherwise an empty string
 }
 
 message LocationRequest {
@@ -70,8 +71,8 @@ message LocationRequest {
 }
 
 message LocationResponse {
-    string parentUri = 1; // only set if accessAllowed is true, otherwise otherwise
-    string version = 2; // only set if accessAllowed is true, otherwise not set
+    string parentUri = 1; // only set if accessAllowed is true, otherwise an empty string
+    string version = 2; // only set if accessAllowed is true and there was a READ request, otherwise an empty string
     bool accessAllowed = 3;
 }
 
