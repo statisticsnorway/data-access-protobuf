@@ -35,7 +35,6 @@ message WriteOptions {
 }
 
 message AccessTokenRequest {
-    string userId = 1;
     Privilege privilege = 2;
     string path = 3; // example: '/rawdata/skatt/konto'
 
@@ -57,7 +56,6 @@ message AccessTokenResponse {
 }
 
 message LocationRequest {
-    string userId = 1;
     Privilege privilege = 2;
     string path = 3; // example: '/rawdata/skatt/konto'
 
