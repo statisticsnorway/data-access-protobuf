@@ -11,25 +11,25 @@ service DataAccessService {
 }
 
 message ReadLocationRequest {
-    string path = 3; // example: '/rawdata/skatt/konto'
+    string path = 1; // example: '/rawdata/skatt/konto'
 
     // Find version that was valid of the time of snapshot.
     // If not supplied (or value == 0) will find timestamp of latest version.
-    int64 snapshot = 4;
+    int64 snapshot = 2;
 }
 
 message ReadLocationResponse {
-    string parentUri = 1; // only set if accessAllowed is true, otherwise an empty string
-    string version = 2; // only set if accessAllowed is true, otherwise an empty string
-    bool accessAllowed = 3;
+    bool accessAllowed = 1;
+    string parentUri = 2; // only set if accessAllowed is true, otherwise an empty string
+    string version = 3; // only set if accessAllowed is true, otherwise an empty string
 }
 
 message ReadAccessTokenRequest {
-    string path = 3; // example: '/rawdata/skatt/konto'
+    string path = 1; // example: '/rawdata/skatt/konto'
 
     // Find version that was valid of the time of snapshot.
     // If not supplied (or value == 0) will find timestamp of latest version.
-    int64 snapshot = 4;
+    int64 snapshot = 2;
 }
 
 message ReadAccessTokenResponse {
@@ -42,18 +42,18 @@ message ReadAccessTokenResponse {
 
 message WriteLocationRequest {
     // A json serialized representation of metadata according to the dataset-api specification
-    string metadataJson = 6;
+    string metadataJson = 1;
 }
 
 message WriteLocationResponse {
-    bool accessAllowed = 3;
-    bytes validMetadataJson = 7; // if accessAllowed, bytes of metadata json file that is signed, empty otherwise.
-    bytes metadataSignature = 8; // if accessAllowed, a digital signature of the metadata json bytes, empty otherwise
+    bool accessAllowed = 1;
+    bytes validMetadataJson = 2; // if accessAllowed, bytes of metadata json file that is signed, empty otherwise.
+    bytes metadataSignature = 3; // if accessAllowed, a digital signature of the metadata json bytes, empty otherwise
 }
 
 message WriteAccessTokenRequest {
-    bytes metadataJson = 7; // bytes of metadata json file that is signed
-    bytes metadataSignature = 8; // a digital signature of the metadata json bytes
+    bytes metadataJson = 1; // bytes of metadata json file that is signed
+    bytes metadataSignature = 2; // a digital signature of the metadata json bytes
 }
 
 message WriteAccessTokenResponse {
