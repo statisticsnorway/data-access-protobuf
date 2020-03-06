@@ -4,50 +4,35 @@ option java_multiple_files = true;
 option java_package = "no.ssb.dapla.data.access.protobuf";
 
 service DataAccessService {
-    rpc getAccessToken (AccessTokenRequest) returns (AccessTokenResponse);
-    rpc getLocation (LocationRequest) returns (LocationResponse);
+    rpc readLocation (ReadLocationRequest) returns (ReadLocationResponse);
+    rpc readAccessToken (ReadAccessTokenRequest) returns (ReadAccessTokenResponse);
+    rpc writeLocation (WriteLocationRequest) returns (WriteLocationResponse);
+    rpc writeAccessToken (WriteAccessTokenRequest) returns (WriteAccessTokenResponse);
 }
 
-enum Privilege {
-    READ = 0;
-    WRITE = 1;
-}
-
-enum Valuation {
-    SENSITIVE = 0;
-    SHIELDED = 1;
-    INTERNAL = 2;
-    OPEN = 3;
-}
-
-enum DatasetState {
-    OTHER = 0;
-    RAW = 1;
-    INPUT = 2;
-    PROCESSED = 3;
-    OUTPUT = 4;
-    PRODUCT = 5;
-}
-
-message WriteOptions {
-    Valuation valuation = 1;
-    DatasetState state = 2;
-}
-
-message AccessTokenRequest {
-    Privilege privilege = 2;
+message ReadLocationRequest {
     string path = 3; // example: '/rawdata/skatt/konto'
 
     // Find version that was valid of the time of snapshot.
     // If not supplied (or value == 0) will find timestamp of latest version.
     int64 snapshot = 4;
-
-    // If Privilege is a WRITE operation, then the writeOptions must be present
-    // and contain the desired valuation and state
-    WriteOptions writeOptions = 5;
 }
 
-message AccessTokenResponse {
+message ReadLocationResponse {
+    string parentUri = 1; // only set if accessAllowed is true, otherwise an empty string
+    string version = 2; // only set if accessAllowed is true, otherwise an empty string
+    bool accessAllowed = 3;
+}
+
+message ReadAccessTokenRequest {
+    string path = 3; // example: '/rawdata/skatt/konto'
+
+    // Find version that was valid of the time of snapshot.
+    // If not supplied (or value == 0) will find timestamp of latest version.
+    int64 snapshot = 4;
+}
+
+message ReadAccessTokenResponse {
     // there will be an exception if access is not allowed
     string accessToken = 1;
     int64 expirationTime = 2;
@@ -55,22 +40,24 @@ message AccessTokenResponse {
     string version = 4; // only set if there was a READ request, otherwise an empty string
 }
 
-message LocationRequest {
-    Privilege privilege = 2;
-    string path = 3; // example: '/rawdata/skatt/konto'
-
-    // Find version that was valid of the time of snapshot.
-    // If not supplied (or value == 0) will find timestamp of latest version.
-    int64 snapshot = 4;
-
-    // If Privilege is a WRITE operation, then the writeOptions must be present
-    // and contain the desired valuation and state
-    WriteOptions writeOptions = 5;
+message WriteLocationRequest {
+    // A json serialized representation of metadata according to the dataset-api specification
+    string metadataJson = 6;
 }
 
-message LocationResponse {
-    string parentUri = 1; // only set if accessAllowed is true, otherwise an empty string
-    string version = 2; // only set if accessAllowed is true and there was a READ request, otherwise an empty string
+message WriteLocationResponse {
     bool accessAllowed = 3;
+    bytes validMetadataJson = 7; // if accessAllowed, bytes of metadata json file that is signed, empty otherwise.
+    bytes metadataSignature = 8; // if accessAllowed, a digital signature of the metadata json bytes, empty otherwise
 }
 
+message WriteAccessTokenRequest {
+    bytes metadataJson = 7; // bytes of metadata json file that is signed
+    bytes metadataSignature = 8; // a digital signature of the metadata json bytes
+}
+
+message WriteAccessTokenResponse {
+    // there will be an exception if access is not allowed
+    string accessToken = 1;
+    int64 expirationTime = 2;
+}
