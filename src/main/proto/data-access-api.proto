@@ -26,10 +26,7 @@ message ReadLocationResponse {
 
 message ReadAccessTokenRequest {
     string path = 1; // example: '/rawdata/skatt/konto'
-
-    // Find version that was valid of the time of snapshot.
-    // If not supplied (or value == 0) will find timestamp of latest version.
-    int64 snapshot = 2;
+    string version = 2; // must match an exact version
 }
 
 message ReadAccessTokenResponse {
