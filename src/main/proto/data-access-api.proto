@@ -34,7 +34,7 @@ message ReadAccessTokenResponse {
     string accessToken = 1;
     int64 expirationTime = 2;
     string parentUri = 3;
-    string version = 4; // only set if there was a READ request, otherwise an empty string
+    string version = 4;
 }
 
 message WriteLocationRequest {
@@ -46,6 +46,7 @@ message WriteLocationResponse {
     bool accessAllowed = 1;
     bytes validMetadataJson = 2; // if accessAllowed, bytes of metadata json file that is signed, empty otherwise.
     bytes metadataSignature = 3; // if accessAllowed, a digital signature of the metadata json bytes, empty otherwise
+    string parentUri = 4; // only set if accessAllowed is true, otherwise an empty string
 }
 
 message WriteAccessTokenRequest {
@@ -57,4 +58,5 @@ message WriteAccessTokenResponse {
     // there will be an exception if access is not allowed
     string accessToken = 1;
     int64 expirationTime = 2;
+    string parentUri = 3;
 }
