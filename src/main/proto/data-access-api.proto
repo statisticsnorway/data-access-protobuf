@@ -5,9 +5,7 @@ option java_package = "no.ssb.dapla.data.access.protobuf";
 
 service DataAccessService {
     rpc readLocation (ReadLocationRequest) returns (ReadLocationResponse);
-    rpc readAccessToken (ReadAccessTokenRequest) returns (ReadAccessTokenResponse);
     rpc writeLocation (WriteLocationRequest) returns (WriteLocationResponse);
-    rpc writeAccessToken (WriteAccessTokenRequest) returns (WriteAccessTokenResponse);
 }
 
 message ReadLocationRequest {
@@ -22,19 +20,9 @@ message ReadLocationResponse {
     bool accessAllowed = 1;
     string parentUri = 2; // only set if accessAllowed is true, otherwise an empty string
     string version = 3; // only set if accessAllowed is true, otherwise an empty string
-}
-
-message ReadAccessTokenRequest {
-    string path = 1; // example: '/rawdata/skatt/konto'
-    string version = 2; // must match an exact version
-}
-
-message ReadAccessTokenResponse {
-    // there will be an exception if access is not allowed
-    string accessToken = 1;
-    int64 expirationTime = 2;
-    string parentUri = 3;
-    string version = 4;
+    // Access token wil only be provided if access is allowed
+    string accessToken = 4;
+    int64 expirationTime = 5;
 }
 
 message WriteLocationRequest {
@@ -47,16 +35,6 @@ message WriteLocationResponse {
     bytes validMetadataJson = 2; // if accessAllowed, bytes of metadata json file that is signed, empty otherwise.
     bytes metadataSignature = 3; // if accessAllowed, a digital signature of the metadata json bytes, empty otherwise
     string parentUri = 4; // only set if accessAllowed is true, otherwise an empty string
-}
-
-message WriteAccessTokenRequest {
-    bytes metadataJson = 1; // bytes of metadata json file that is signed
-    bytes metadataSignature = 2; // a digital signature of the metadata json bytes
-}
-
-message WriteAccessTokenResponse {
-    // there will be an exception if access is not allowed
-    string accessToken = 1;
-    int64 expirationTime = 2;
-    string parentUri = 3;
+    string accessToken = 5;
+    int64 expirationTime = 6;
 }
