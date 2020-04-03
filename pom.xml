@@ -12,7 +12,7 @@
 
     <groupId>no.ssb.dapla.data</groupId>
     <artifactId>data-access-protobuf</artifactId>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <packaging>multi-release-jar</packaging>
     <name>${project.artifactId}</name>
 
