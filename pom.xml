@@ -10,7 +10,7 @@
 
     <groupId>no.ssb.dapla.data</groupId>
     <artifactId>data-access-protobuf</artifactId>
-    <version>0.10</version>
+    <version>0.11-SNAPSHOT</version>
     <packaging>multi-release-jar</packaging>
     <name>${project.artifactId}</name>
 
@@ -23,7 +23,7 @@
         <connection>scm:git:git://github.com/statisticsnorway/data-access-protobuf.git</connection>
         <developerConnection>scm:git:git@github.com:statisticsnorway/data-access-protobuf.git</developerConnection>
         <url>https://github.com/statisticsnorway/data-access-protobuf</url>
-        <tag>data-access-protobuf-0.10</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
