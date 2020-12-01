@@ -37,4 +37,6 @@ message WriteLocationResponse {
     string parentUri = 4; // only set if accessAllowed is true, otherwise an empty string
     string accessToken = 5;
     int64 expirationTime = 6;
+    bytes allValidMetadataJson = 7; // if accessAllowed, bytes of all-metadata (including parent-uri) json file that is signed, empty otherwise.
+    bytes allMetadataSignature = 8; // if accessAllowed, a digital signature of the all-metadata json bytes, empty otherwise
 }
