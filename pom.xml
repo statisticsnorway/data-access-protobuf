@@ -1,18 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>io.helidon.applications</groupId>
         <artifactId>helidon-se</artifactId>
         <version>2.1.0</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <groupId>no.ssb.dapla.data</groupId>
     <artifactId>data-access-protobuf</artifactId>
-    <version>0.10-SNAPSHOT</version>
+    <version>0.10</version>
     <packaging>multi-release-jar</packaging>
     <name>${project.artifactId}</name>
 
@@ -25,7 +23,7 @@
         <connection>scm:git:git://github.com/statisticsnorway/data-access-protobuf.git</connection>
         <developerConnection>scm:git:git@github.com:statisticsnorway/data-access-protobuf.git</developerConnection>
         <url>https://github.com/statisticsnorway/data-access-protobuf</url>
-        <tag>HEAD</tag>
+        <tag>data-access-protobuf-0.10</tag>
     </scm>
 
     <dependencies>
