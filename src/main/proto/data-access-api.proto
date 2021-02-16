@@ -6,7 +6,23 @@ option java_package = "no.ssb.dapla.data.access.protobuf";
 //service DataAccessService {
 //    rpc readLocation (ReadLocationRequest) returns (ReadLocationResponse);
 //    rpc writeLocation (WriteLocationRequest) returns (WriteLocationResponse);
+//    rpc deleteLocation (DeleteLocationRequest) returns (DeleteLocationResponse);
 //}
+
+message DeleteLocationRequest {
+    string path = 1; // example: '/rawdata/skatt/konto'
+
+    // Find version that was valid of the time of snapshot.
+    // If not supplied (or value == 0) will find timestamp of latest version.
+    int64 snapshot = 2;
+}
+
+message DeleteLocationResponse {
+    bool accessAllowed = 1;
+    string parentUri = 4; // only set if accessAllowed is true, otherwise an empty string
+    string accessToken = 5;
+    int64 expirationTime = 6;
+}
 
 message ReadLocationRequest {
     string path = 1; // example: '/rawdata/skatt/konto'
